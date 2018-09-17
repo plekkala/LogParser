@@ -24,6 +24,7 @@ public class LogParser {
 	static String configFile = "configFile";
 	static String logFileName = "logFile";
 	static String resultsFileName = "resultsDir";
+	static String forceSearchName = "forceSearch";
 	static String logFile;
 
 	public static void main(String[] args) throws IOException {
@@ -33,7 +34,15 @@ public class LogParser {
 		applicationProperties = loadProperties(applicationFile);
 		configProperties = loadProperties(applicationProperties.get(configFile));
 		logFile = applicationProperties.get(logFileName);
-		patternMatching();
+		Boolean forceSearch  = Boolean.valueOf(applicationProperties.get(forceSearchName));
+		if(forceSearch){
+			forcePatternMatching();
+		}
+		else{
+			patternMatching();
+		}
+		
+		
 		printResults(applicationProperties.get(resultsFileName));
 
 		// export and print the results
@@ -97,6 +106,40 @@ public class LogParser {
 
 	}
 
+	private static void forcePatternMatching() throws IOException {
+
+		// Pattern patt = Pattern.compile("[A-Za-z][a-z]+");
+
+		
+
+		String line;
+	//	while (true)
+			for (String name : configProperties.keySet()) {
+				LineNumberReader r = loadFile(logFile);
+				while ((line = r.readLine()) != null) {
+					boolean matchFound = false;
+					Pattern patt = Pattern.compile(configProperties.get(name));
+					Matcher m = patt.matcher(line);
+					while (m.find()) {
+						matchFound = true;
+						int start = m.start(0);
+						int end = m.end(0);
+						System.out.println(line.substring(start, end));
+						matchedStrings.add(line.substring(start, end));
+						r.mark(r.getLineNumber());
+						r.reset();
+						break;
+					}
+					if (matchFound) {
+						System.out.println("Line Number:" + r.getLineNumber());
+						break;
+					}
+
+				}
+
+			}
+
+	}
 	private static LineNumberReader loadFile(String fileName) throws IOException {
 
 		LineNumberReader r = new LineNumberReader(new FileReader(fileName));

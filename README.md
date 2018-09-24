@@ -7,3 +7,4 @@ Jenkins set up is done
 commit from feature
 
 commit from feature1
+commit from feature2

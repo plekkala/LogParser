@@ -1,0 +1,14 @@
+SYSTEM: 	JPOS
+SEVERITY:	WARN 
+SOURCE: 	jPOS	
+RAISED ON:	06 Oct 2019 20:45:53
+TEXT:		TimeOut while sending message
+org.jpos.risknet.exception.TimeOutException: Timeout expired while waiting for response
+	at org.jpos.risknet.messaging.rpc.RPCClientRabbitMQ.call(RPCClientRabbitMQ.java:97)
+	at org.jpos.risknet.messaging.rpc.RPCClientRabbitMQ.sendMessage(RPCClientRabbitMQ.java:59)
+	at org.jpos.risknet.transaction.PrepareRTSResponse.doPrepare(PrepareRTSResponse.java:113)
+	at org.jpos.transaction.TxnSupport.prepare(TxnSupport.java:46)
+	at org.jpos.transaction.TransactionManager.prepare(TransactionManager.java:448)
+	at org.jpos.transaction.TransactionManager.prepare(TransactionManager.java:501)
+	at org.jpos.transaction.TransactionManager.run(TransactionManager.java:248)
+	at java.lang.Thread.run(Unknown Source)
